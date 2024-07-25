@@ -18,7 +18,6 @@ jobs:
       - name: Build
         run: |
           npm ci
-          npm run pack
           cd dist && zip -r -9 api.zip *
 
       - name: Update
