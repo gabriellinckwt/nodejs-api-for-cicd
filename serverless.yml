@@ -1,0 +1,27 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: chemello
+service: nodejs-aws-lambda
+provider:
+  name: aws
+  runtime: nodejs18.x
+functions:
+  app:
+    handler: dist/server.handler
+    events:
+      - http: GET /users
+      - http:
+          path: /users
+          method: post
+          cors: true
+      - http:
+          path: /login
+          method: post
+          cors: true
+      - http:
+          path: /users/{id}
+          method: put
+          cors: true
+      - http:
+          path: /users/{id}
+          method: delete
+          cors: true
