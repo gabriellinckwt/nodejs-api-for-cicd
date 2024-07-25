@@ -1,31 +1,31 @@
-name: Deploy
-
+name: API
 on:
   push:
     branches:
       - main
-
 jobs:
-  deploy_lambda:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Node.js setup
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: 18
 
-      - name: Install dependencies and bundle code
-        env:
-          CI: true
+      - name: Build
         run: |
           npm ci
-          zip -r publish.zip ./*
-      - name: Deploy to AWS Lambda
-        run: |
-          aws lambda update-function-code --function-name nodejs-aws-lambda-dev-app --zip-file fileb://publish.zip --region us-east-1
+          npm run pack
+          cd dist && zip -r -9 api.zip *
+
+      - name: Update
+        uses: kazimanzurrashid/aws-lambda-update-action@v2.0.3
+        with:
+          zip-file: dist/api.zip
         env:
-          AWS_ACCESS_KEY_ID: AKIAVRUVRVIM6262WC6S
-          AWS_SECRET_ACCESS_KEY: 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
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
