@@ -1,9 +1,9 @@
 name: Deploy #Name of the Workflow
 
 on: #Name of the GitHub event that triggers the workflow
-  push: #On Push Event We need to take action
-    branches: #Now we need to specify the branch name
-      - main
+  pull_request: #On Push Event We need to take action
+    branches: [main]
+    types: [closed]
 
 jobs: #Workflow run is made up of one or more jobs
   deploy_lambda:
@@ -29,4 +29,4 @@ jobs: #Workflow run is made up of one or more jobs
       - name: deploy
         run: |
           zip -j deploy.zip ./*
-          aws lambda update-function-code --function-name nodejs-aws-lambda-dev-app --zip-file=fileb://deploy.zip
+          aws lambda update-function-code --function-name nodejs-aws-lambda-dev-app --zip-file fileb://deploy.zip
