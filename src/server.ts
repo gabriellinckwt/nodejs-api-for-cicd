@@ -7,6 +7,8 @@ import connectToDB from "./database/mysql/db";
 import serverConfig from "./config/server";
 const app = express();
 
+//
+
 connectToDB();
 app.use(express.json());
 app.use(userRoutes);
