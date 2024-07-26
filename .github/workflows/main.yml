@@ -28,5 +28,5 @@ jobs: #Workflow run is made up of one or more jobs
           npm ci
       - name: deploy
         run: |
-          zip -j deploy.zip ../../*
+          zip -r deploy.zip .
           aws lambda update-function-code --function-name nodejs-aws-lambda-dev-app --zip-file fileb://deploy.zip
