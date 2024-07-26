@@ -24,9 +24,13 @@ jobs: #Workflow run is made up of one or more jobs
       - name: npm install
         env:
           CI: true
-        run: |
-          npm ci
-      - name: deploy
-        run: |
-          zip -r deploy.zip . -x ".git/" ".github/"
-          aws lambda update-function-code --function-name nodejs-aws-lambda-dev-app --zip-file fileb://deploy.zip
+        run: npm ci
+      - name: build project
+        run: npm build
+      - name: serverless deploy
+        uses: serverless/github-action@v3.2
+        with:
+          args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -5,8 +5,8 @@ function connectToDB() {
   try {
     new dynamoose.aws.ddb.DynamoDB({
       credentials: {
-        accessKeyId: dbConfig.AWS_ACCESS_KEY,
-        secretAccessKey: dbConfig.AWS_SECRET_KEY,
+        accessKeyId: dbConfig.AWS_ACCESS_KEY_ID,
+        secretAccessKey: dbConfig.AWS_SECRET_ACCESS_KEY,
       },
       region: dbConfig.AWS_REGION,
     });
