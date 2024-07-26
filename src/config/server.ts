@@ -1,6 +1,6 @@
 const serverConfig = {
-  PORT: process.env.PORT as string,
-  JWT_SECRET: process.env.JWT_SECRET as string,
+  PORT: 3000,
+  JWT_SECRET: "mysecret",
 };
 
 export default serverConfig;
