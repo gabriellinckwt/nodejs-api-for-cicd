@@ -3,4 +3,6 @@ const serverConfig = {
   JWT_SECRET: "mysecret",
 };
 
+//
+
 export default serverConfig;
